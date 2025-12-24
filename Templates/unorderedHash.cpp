@@ -12,5 +12,4 @@ struct custom_hash {
         return splitmix64((ull)std::hash<T>{}(x) + FIXED_RANDOM);
     }
 };
-
 const ull custom_hash::FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
