@@ -1,6 +1,6 @@
-/*Weights having frequency > sqrt(MAX_SUM_POSSIBLE) are sent to perform normal bitset subset sum, as such weights are at max sqrt(MAX_SUM_POSSIBLE)...
-Rest weights < sqrt(MAX_SUM_POSSIBLE) are sent to perform binary - decomposition (useful when frequency is VERY HIGH, worst case Binary Decomp.
-==> single CHAINING with Frequency[WT] = 1, for most of the weights)... done for lighter block (in general fast) */
+/*Items having WEIGHTS >= sqrt(MAX_SUM_POSSIBLE) are sent to perform normal bitset subset sum, as such weights are at max. sqrt(MAX_SUM_POSSIBLE)...
+Rest weights < sqrt(MAX_SUM_POSSIBLE) are sent to perform binary - decomposition (useful when these light weights have VERY HIGH frequency,
+worst case for Binary Decomposition ==> single CHAINING with majority weights having Frequency[WT] = 1) [but still in general very fast]*/
 
 const ll maxn = 200005;
 bitset<maxn> dp;
@@ -9,12 +9,15 @@ void sqrtDecomposition(vector<ll> &arr) {
     dp.reset();
     dp[0] = 1;
 
+    ll sum = 0;
     map<ll,ll> mpp;
-    for(auto &num : arr) mpp[num]++;
+    for(auto &num : arr) {
+        mpp[num]++; sum += num;
+    }
 
-    ll Limit = sqrtl(maxn);
+    ll Limit = sqrtl(sum);
     for(auto [WT, cnt] : mpp) {
-        if(cnt > Limit) {
+        if(WT >= Limit) {
             FOR(i,1,cnt) dp |= (dp << WT);
         }
         else {
