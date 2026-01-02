@@ -1,6 +1,6 @@
-vector<ll> topoSort(vector<vector<int>> &adj) {
+vector<ll> topoSort(vector<vector<ll>> &adj) {
     ll n = adj.size() - 1;
-    vector<ll> deg(n+1,0); queue<ll> qu;
+    vector<ll> deg(n+1); queue<ll> qu;
 
     FOR(v,1,n) {
         for(auto &u : adj[v]) {
@@ -9,9 +9,7 @@ vector<ll> topoSort(vector<vector<int>> &adj) {
     }
 
     FOR(v,1,n) {
-        if(!deg[v]) {
-            qu.push(v);
-        }
+        if(!deg[v]) qu.push(v);
     }
 
     vector<ll> topo;
@@ -23,6 +21,8 @@ vector<ll> topoSort(vector<vector<int>> &adj) {
             if(!deg[u]) qu.push(u);
         }
     }
+    
     if((ll)topo.size() < n) return {-1};
     return topo;
+
 }
