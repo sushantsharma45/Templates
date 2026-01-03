@@ -9,12 +9,12 @@ struct DSU {
         for(ll i = 1; i <= N; i++) P[i] = i;
     }
 
-    ll find(ll x) {
+    inline ll find(ll x) {
         if(P[x] == x) return x;
         return P[x] = find(P[x]);
     }
 
-    bool unite(ll a, ll b) {
+    inline bool unite(ll a, ll b) {
         a = find(a);
         b = find(b);
         if(a == b) return false;
@@ -23,7 +23,7 @@ struct DSU {
         return true;
     }
 
-    bool same(ll a, ll b) {
+    inline bool same(ll a, ll b) {
         return find(a) == find(b);
     }
 
@@ -50,4 +50,5 @@ struct DSU {
         }
         return ans;
     }
+
 };
